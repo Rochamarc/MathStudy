@@ -37,9 +37,13 @@ class NumericalSet:
     def __eq__(self, other_set):
         return self.set == other_set.set 
 
+    def __len__(self):
+        return len(self.set)
+
 
 if __name__ == "__main__":
     a = NumericalSet(1,2,3,4,5,6)
     b = NumericalSet(5,6,8,9)
     add_b = a.additional(b)
     print(add_b)
+    print(len(a))
