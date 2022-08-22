@@ -1,14 +1,14 @@
 class NumericalSet:
     def __init__(self, *values):
-        self.set = sorted(values)
+        self.set = sorted(list(dict.fromkeys(values))) # remove duplicates and sort items in that order
         
     def unity(self, other_set):
         ''' Returns another NumericalSet with the unity of this set with the other set '''
-        return NumericalSet(*list(dict.fromkeys((self.set + other_set.set))))
+        return NumericalSet(*(self.set + other_set.set))
 
     def inter(self, other_set):
         ''' Returns another NumericalSet with the intersection of the other set with this one '''
-        return NumericalSet(*[ i for i in self.set for y in other_set.set if i == y ])
+        return NumericalSet(*[ i for i in self.set if i in other_set.set ])
 
     def belongs_to(self, value):
         ''' Return True if the value belongs to this set'''
