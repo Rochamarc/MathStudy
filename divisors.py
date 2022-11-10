@@ -1,14 +1,9 @@
-class Divisor:
-    def __call__(self, value):
-        res = []
-
-        for i in range(1000000):
-            if 'int' in str(type(i / value)):
-                res.append(i)
-
-        return res
+def get_divisors(n):
+    for i in range(1, int(n / 2) + 1):
+        if n % i == 0:
+            yield i
+    yield n
 
 
-a = Divisor()
-print(a(2))
-
+if __name__ == "__main__":
+    get_divisors(10)
