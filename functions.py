@@ -1,3 +1,4 @@
+from itertools import product
 import math
 
 class Affine:
@@ -24,7 +25,11 @@ class Quadratic:
         self.b = b 
         self.c = c
         self.delta = self.b**2 - (4 * self.a * self.c) 
-        
+
+    @property
+    def vertex(self):
+        return f"V{( -self.b/2*self.a , self.delta/2*self.a )}"
+
     @property
     def roots(self):        
         if self.delta < 0:
@@ -57,3 +62,12 @@ print(a.zero)
 q = Quadratic(1,-3,2)
 print(q)
 print(q.roots)
+print(q.vertex)
+
+#
+#
+# Proving sum and product of the roots
+# 
+
+print(sum(q.roots) == -(q.b)/(q.a)) 
+print(q.roots[0] * q.roots[1] == q.c/q.a) 

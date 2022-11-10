@@ -1,17 +1,10 @@
-#
-#
-#
+import matplotlib.pyplot as plt
 
-from pair import Pair
+x = [ 4,5,6,7,6,5,4]
+y = [ 3,2,1,0,1,2,3]
 
-class AffineFunction:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-        self.f_x_ = f'{self.a}x + {self.b}'
-        self.points = [ Pair(x, x*self.a + self.b) for x in range(-3,) if   ]
-
-    def plot(self):
-
-        
-
+plt.plot(x,y)
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title("A simple line graph")
+plt.show()
