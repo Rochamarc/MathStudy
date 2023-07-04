@@ -1,5 +1,7 @@
 from itertools import product
 import math
+import pandas as pd 
+
 
 class Affine:
     def __init__(self, a, b):
@@ -16,7 +18,20 @@ class Affine:
 
     @property
     def zero(self):
+        ''' Return the value when f(x) = 0 '''
         return (self.b * -1) / self.a 
+
+    def calculate(self, x, verbose=False):
+        ''' Receive the value of x and return the function value '''
+        return f'f({x}) = {self.a * x + self.b}' if verbose else self.a * x + self.b
+
+    def simple_table(self):
+        ''' Return a dataframe with x and f(x) values from -2 to 2 '''
+        pairs = []
+        for i in range(2, -3, -1):
+            pairs.append([i, self.calculate(i)])
+
+        return pd.DataFrame(pairs, index=None, columns=['x', 'f(x)'])
 
 class Quadratic:
 
@@ -58,6 +73,9 @@ class Quadratic:
 a = Affine(5,-10)
 print(a)
 print(a.zero)
+print(a.calculate(10))
+
+print(a.simple_table())
 
 q = Quadratic(1,-3,2)
 print(q)
