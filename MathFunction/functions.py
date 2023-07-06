@@ -1,7 +1,22 @@
-from itertools import product
 import math
 import pandas as pd 
 
+
+class Exponential:
+    def __init__(self, a):
+        self.a = a 
+    
+    def __repr__(self) -> str:
+        return f'f(x) = {self.a}^x'
+    
+    def calculate(self, x):
+        ''' Receive the value of x and return the function value '''
+        return self.a**x 
+    
+    def simple_table(self):
+        ''' Return a dataframe with x and f(x) values from -2 to 2 '''
+        pairs = [ [i, self.calculate(i)] for i in range(2,-3, -1) ]
+        return pd.DataFrame(pairs, index=None, columns=['x', 'f(x)'])
 
 class Affine:
     def __init__(self, a, b):
@@ -42,11 +57,14 @@ class Quadratic:
         self.delta = self.b**2 - (4 * self.a * self.c) 
 
     @property
-    def vertex(self):
-        return f"V{( -self.b/2*self.a , self.delta/2*self.a )}"
+    def vertex(self, verbose=False):
+        ''' Return the value of the vertex of the function (vertexX, vertexY)'''
+        return f"V{( -self.b/2*self.a , self.delta/2*self.a )}" if verbose else [ -self.b/2*self.a , self.delta/2*self.a ]
 
     @property
-    def roots(self):        
+    def roots(self):
+        ''' Return the values of x that make the function return 0 '''
+
         if self.delta < 0:
             return [] 
 
@@ -70,22 +88,24 @@ class Quadratic:
 
         return f"f(x) = {self.a}x² {b} {c}"
 
-a = Affine(5,-10)
-print(a)
-print(a.zero)
-print(a.calculate(10))
 
-print(a.simple_table())
+if __name__ == "__main__":
+    a = Affine(5,-10)
+    print(a)
+    print(a.zero)
+    print(a.calculate(10))
 
-q = Quadratic(1,-3,2)
-print(q)
-print(q.roots)
-print(q.vertex)
+    print(a.simple_table())
 
-#
-#
-# Proving sum and product of the roots
-# 
+    q = Quadratic(1,-3,2)
+    print(q)
+    print(q.roots)
+    print(q.vertex)
 
-print(sum(q.roots) == -(q.b)/(q.a)) 
-print(q.roots[0] * q.roots[1] == q.c/q.a) 
+    #
+    #
+    # Proving sum and product of the roots
+    # 
+
+    print(sum(q.roots) == -(q.b)/(q.a)) 
+    print(q.roots[0] * q.roots[1] == q.c/q.a) 
