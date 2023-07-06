@@ -37,6 +37,9 @@ class Affine:
         pairs = [ [i, self.calculate(i)] for i in range(2, -3, -1) ]
         return pd.DataFrame(pairs, index=None, columns=['x', 'f(x)'])
 
+    def reverse(self, y):
+        return (y + (self.b * -1)) / self.a
+
 class Quadratic:
     def  __init__(self, a, b, c):
         self.a = a
