@@ -22,19 +22,11 @@ class Affine:
     def __init__(self, a, b):
         self.a = a 
         self.b = b
-    
+        self.zero = (self.b * -1) / self.a 
+
     def __repr__(self):
-        if self.b > 0:
-            b = f"+{self.b}"
-        else:
-            b = f"{self.b}"
-
-        return f"f(x) = {self.a}x {b}"
-
-    @property
-    def zero(self):
-        ''' Return the value when f(x) = 0 '''
-        return (self.b * -1) / self.a 
+        sign = '+' if self.b > 0 else ''
+        return f"f(x) = {self.a}x{sign}{self.b}"
 
     def calculate(self, x, verbose=False):
         ''' Receive the value of x and return the function value '''
@@ -42,32 +34,24 @@ class Affine:
 
     def simple_table(self):
         ''' Return a dataframe with x and f(x) values from -2 to 2 '''
-        pairs = []
-        for i in range(2, -3, -1):
-            pairs.append([i, self.calculate(i)])
-
+        pairs = [ [i, self.calculate(i)] for i in range(2, -3, -1) ]
         return pd.DataFrame(pairs, index=None, columns=['x', 'f(x)'])
 
 class Quadratic:
-
     def  __init__(self, a, b, c):
         self.a = a
         self.b = b 
         self.c = c
         self.delta = self.b**2 - (4 * self.a * self.c) 
-
-    @property
-    def vertex(self, verbose=False):
-        ''' Return the value of the vertex of the function (vertexX, vertexY)'''
-        return f"V{( -self.b/2*self.a , self.delta/2*self.a )}" if verbose else [ -self.b/2*self.a , self.delta/2*self.a ]
+        self.vertX = -self.b/2*self.a
+        self.vertY = self.delta/2*self.a
+        self.vertex = [ self.vertX, self.vertY ]
 
     @property
     def roots(self):
         ''' Return the values of x that make the function return 0 '''
-
-        if self.delta < 0:
-            return [] 
-
+        if self.delta < 0 : return []
+             
         if self.delta == 0:
             return [ (-self.b + 0)/ 2 * self.a ]
 
@@ -76,17 +60,11 @@ class Quadratic:
         return [x_1, x_2]
         
     def __repr__(self):
-        if self.b > 0:
-            b = f"+{self.b}x"
-        else:
-            b = f"{self.b}x"
+        sign_b = '+' if self.b > 0 else ''
+        sign_c = '+' if self.c > 0 else ''
 
-        if self.c > 0:
-            c = f"+{self.c}"
-        else:
-            c = f"{self.c}"
-
-        return f"f(x) = {self.a}x² {b} {c}"
+        # f(x) = ax²+bx+c
+        return f"f(x) = {self.a}x²{sign_b}{self.b}{sign_c}{self.c}"
 
 
 if __name__ == "__main__":
