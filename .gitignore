@@ -1,1 +1,4 @@
 */__pycache__/
+
+# ignoring txt files on divisors
+/Creating\ Table\ With\ Divisors/*.txt
