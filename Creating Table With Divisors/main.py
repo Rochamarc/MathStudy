@@ -8,24 +8,28 @@ values = get_divisions()
 # To store all the results
 results = []
 
-for _ in range(20):
-    data = []
+with open('arquivo.txt', 'w+') as file:
+    for _ in range(20):
+        data = []
 
-    for _ in range(4):
-        # Here we create a 4x4 matrix 
+        for _ in range(4):
+            # Here we create a 4x4 matrix 
 
-        line = fill_line(values, 4)
-        
-        # Save the results
-        results += [ l[-1] for l in line ]
+            line = fill_line(values, 4)
+            
+            # Save the results
+            results += [ l[-1] for l in line ]
 
-        # remove the results from the line
-        line = [ l[0] for l in line ]
+            # remove the results from the line
+            line = [ l[0] for l in line ]
 
-        data.append(line)
+            data.append(line)
 
-    print(tabulate(data, tablefmt="simple_grid"))
-    # print(results)
+        file.write((tabulate(data, tablefmt="grid")))
+        file.write('\n')
+        file.write("-"*100)
+        file.write('\n')
+
 
 # Remove duplicates    
 results = set(results)
