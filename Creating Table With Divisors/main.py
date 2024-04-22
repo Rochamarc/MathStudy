@@ -1,5 +1,3 @@
-from random import choice 
-
 from tabulate import tabulate
 
 from lib import get_divisions, fill_line
@@ -18,13 +16,12 @@ for _ in range(20):
 
         line = fill_line(values, 4)
         
-        # for _ in range(4):
-        #     list_pointer = choice(values) # get the operation
+        # Save the results
+        results += [ l[-1] for l in line ]
 
-        #     # Store the operation in line and the answer to the results 
-        #     line.append(list_pointer[0])
-        #     results.append(list_pointer[-1])
-        
+        # remove the results from the line
+        line = [ l[0] for l in line ]
+
         data.append(line)
 
     print(tabulate(data, tablefmt="simple_grid"))
