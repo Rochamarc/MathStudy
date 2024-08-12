@@ -1,5 +1,3 @@
-from Sets.numerical_sets import NumericalSet
-
 class Pair:
 	def __init__(self, x, y):
 		self.x = x 
@@ -19,6 +17,7 @@ class OrderedPair2:
 	def __str__(self):
 		return "S = {" + str([ pair for pair in self.pairs ]) + "}"
 
+# This is in the function context with domain, codomain and image
 class OrderedPair:	
 	def __init__(self, set_a, set_b):
 		self.pairs = [ (x,y) for x in set_a.set for y in set_b.set ]
@@ -48,17 +47,3 @@ if __name__ == "__main__":
 
 	od = OrderedPair2(p1,p2,p3)
 	print(od) 
-
-	"""
-	a = NumericalSet(1,2,3,4,5)
-	b = NumericalSet(-5,-4,-3,-2,-1)
-	axb = OrderedPair(a,b)
-	print(axb.pairs)
-	print("\n")
-	print(axb.inverse)0
-
-	print("\n\n")
-	print(axb.domain)
-	print("\n")
-	print(axb.image)
-	"""

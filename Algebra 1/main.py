@@ -95,6 +95,15 @@ class Relation:
                 n += 1
 
         return n == len(self.relations)
+    
+    def transitive(self) -> bool:
+        """For each x, y and z in the relations xRy and yRz -> xRz
+
+        Returns
+        -------
+        bool : 
+        """
+        ...
 
 if __name__ == "__main__":
     rel = [[1,1], [2,2], [2,1]]
