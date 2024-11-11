@@ -2,6 +2,15 @@
 #
 #
 
+class MakeRelation():
+    def __init__(self, name: str, starter_set: list[any]) -> None:
+        self.name = name 
+        self.relations = None 
+        self.starter_set = starter_set
+    
+    def reflexive(self) -> list[list]: 
+        return [ [i,y] for i in self.starter_set for y in self.starter_set if i != y ]
+
 class Relation:
     def __init__(self, name: str, relations: list[list]) -> None:
         self.name = name
@@ -103,16 +112,34 @@ class Relation:
         -------
         bool : 
         """
-        ...
+        
+        n = 0
+
+        for rel in self.relations:
+            x, y = rel[0], rel[-1]
+
+            if x == y:
+                n += 1
+                break
+            else:
+                for rel_2 in self.relations:
+                    ...
+
+
+
 
 if __name__ == "__main__":
-    rel = [[1,1], [2,2], [2,1]]
-    R = Relation('R', rel)
-    print(f"R: {R}")
-    print(f"D(R): {R.domain}")
-    print(f"Im(R): {R.image}")
-    print(f"R⁻¹: {R.reverse}")
-    print(f"R is reflexive? {R.reflexive()}")
-    print(f"R is anti reflexive? {R.anti_reflexive()}")
-    print(f"R is symmetrical? {R.symmetrical()}")
-    print(f"R is anti symmetrical? {R.anti_symmetrical()}")
+    # rel = [[1,1], [2,2], [2,1]]
+    # R = Relation('R', rel)
+    # print(f"R: {R}")
+    # print(f"D(R): {R.domain}")
+    # print(f"Im(R): {R.image}")
+    # print(f"R⁻¹: {R.reverse}")
+    # print(f"R is reflexive? {R.reflexive()}")
+    # print(f"R is anti reflexive? {R.anti_reflexive()}")
+    # print(f"R is symmetrical? {R.symmetrical()}")
+    # print(f"R is anti symmetrical? {R.anti_symmetrical()}")
+
+    a = [1,2,3]
+    b = MakeRelation('R', a)
+    print(b.reflexive())

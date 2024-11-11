@@ -24,7 +24,7 @@ class OrderedPair:
 
 	@property
 	def inverse(self):
-		return [ (i[-1], i[0]) for i in self.pairs  ]
+		return [ i[::-1] for i in self.pairs  ]
 
 	@property
 	def domain(self):
@@ -45,5 +45,5 @@ if __name__ == "__main__":
 	p2 = Pair(2,0)
 	p3 = Pair(3,3)
 
-	od = OrderedPair2(p1,p2,p3)
+	od = OrderedPair([1,2,3], [4,5,6])
 	print(od) 
