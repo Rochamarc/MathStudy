@@ -15,7 +15,7 @@ class NumericalSet:
         return value in self.set
 
     def dont_belongs_to(self, value):
-        ''' Return True if the value dont belongs to this set '''
+        ''' Return the negation of belongs_to method '''
         return value not in self.set 
 
     def is_contained(self, other_set):
