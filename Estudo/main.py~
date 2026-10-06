@@ -1,3 +1,0 @@
-
-with open('cronograma_1.csv', 'r', encoding='utf8') as f:
-    print(f.readlines()) 
