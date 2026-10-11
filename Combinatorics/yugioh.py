@@ -8,80 +8,87 @@
 
 # Rules
 # This is the deck
-# 1 Anchamoufrite
-# 1 Exodia the Forbidden One
-# 1 Left Arm of the Forbidden One
-# 1 Left Leg of the Forbidden One
-# 1 Right Arm of the Forbidden One
-# 1 Right Leg of the Forbidden One
-# 3 Royal Magical Library
-# 1 Card of Demise
-# 1 Chicken Game
-# 1 Contract with Don Thousand
-# 3 Cursed Bamboo Sword
-# 1 Dark Factory of Mass Production
-# 1 Dark World Dealings
-# 1 Double Summon
-# 3 Golden Bamboo Sword
-# 1 Into the Void
-# 3 Magical Citadel of Endymion
-# 2 Magical Mallet
-# 1 Magical Stone Excavation
-# 1 One Day of Peace
-# 1 Pot of Duality
-# 1 Spell Power Grasp
-# 1 Terraforming
-# 1 Toon Bookmark
-# 3 Toon Table of Contents
+# Anchamoufrite
+# Exodia the Forbidden One
+# Left Arm of the Forbidden One
+# Left Leg of the Forbidden One
+# Right Arm of the Forbidden One
+# Right Leg of the Forbidden One
+# Royal Magical Library
+# Royal Magical Library
+# Royal Magical Library
+# Card of Demise
+# Chicken Game
+# Contract with Don Thousand
+# Cursed Bamboo Sword
+# Cursed Bamboo Sword
+# Cursed Bamboo Sword
+# Dark Factory of Mass Production
+# Dark World Dealings
+# Double Summon
+# Golden Bamboo Sword
+# Golden Bamboo Sword
+# Golden Bamboo Sword
+# Into the Void
+# Magical Citadel of Endymion
+# Magical Citadel of Endymion
+# Magical Citadel of Endymion
+# Magical Mallet
+# Magical Mallet
+# Magical Stone Excavation
+# One Day of Peace
+# Pot of Duality
+# Spell Power Grasp
+# Terraforming
+# Toon Bookmark
+# Toon Table of Contents
+# Toon Table of Contents
+# Toon Table of Contents
+# Upstart Goblin
+# Blue-Eyes Toon Dragon
+# Pseudo Space
+# Trade-In
 
 import random
-from time import sleep
+from collections import defaultdict
+from pprint import pprint
+import pandas as pd 
 
-deck = [
-    "Anchamoufrite",
-    "Exodia the Forbidden One",
-    "Left Arm of the Forbidden One",
-    "Left Leg of the Forbidden One",
-    "Right Arm of the Forbidden One",
-    "Right Leg of the Forbidden One",
-    "Royal Magical Library",
-    "Royal Magical Library",
-    "Royal Magical Library",
-    "Card of Demise",
-    "Chicken Game",
-    "Contract with Don Thousand",
-    "Cursed Bamboo Sword",
-    "Cursed Bamboo Sword",
-    "Cursed Bamboo Sword",
-    "Dark Factory of Mass Production",
-    "Dark World Dealings",
-    "Double Summon",
-    "Golden Bamboo Sword",
-    "Golden Bamboo Sword",
-    "Golden Bamboo Sword",
-    "Into the Void",
-    "Magical Citadel of Endymion",
-    "Magical Citadel of Endymion",
-    "Magical Citadel of Endymion",
-    "Magical Mallet",
-    "Magical Mallet",
-    "Magical Stone Excavation",
-    "One Day of Peace",
-    "Pot of Duality",
-    "Spell Power Grasp",
-    "Terraforming",
-    "Toon Bookmark",
-    "Toon Table of Contents",
-    "Toon Table of Contents",
-    "Toon Table of Contents"
-]
+dd = defaultdict(int)
+winning_hands = 0
+
+deck = []
+
+with open("exodia_deck.csv", "r") as file:
+    file = file.readlines()
+
+    for line in file:
+        line = line.split(",")
+        card = line[0].replace('"', '')
+        deck.append(card)
 
 def check_hand(your_hand: list) -> int:
     """
+    Check a hand for:
+    "Exodia the Forbidden One"
+    "Left Arm of the Forbidden One"
+    "Left Leg of the Forbidden One"
+    "Right Arm of the Forbidden One"
+    "Right Leg of the Forbidden One"
+
+    Parameters
+    ----------
+    your_hand: list
+        A list of five cards from the user's deck
+
+    Returns
+    -------
+    cont : int
+        If value is equal to five, you win the duel. max: 5
     """
 
     winning_hand = [
-    "Exodia the Forbidden One",
+        "Exodia the Forbidden One",
         "Left Arm of the Forbidden One",
         "Left Leg of the Forbidden One",
         "Right Arm of the Forbidden One",
@@ -90,22 +97,42 @@ def check_hand(your_hand: list) -> int:
 
     cont = 0
     for i in your_hand:
+        dd[i] += 1
+
         if i in winning_hand:
             cont += 1
 
     return cont
 
-for it in range(100_000):
-    your_deck = deck.copy()
-    random.shuffle(your_deck)
-    your_hand = your_deck[1:6] 
+try:
+    for it in range(1*10**7):
 
-    print(*your_hand, sep=" | ", end="\n")
-    sleep(0.1)
-    
-    if check_hand == 5:
-        print("Yupii!!!!!!")
-        break
+        # Copy the main deck, shuffle and draw first five cards
+        your_deck = deck.copy()
+        random.shuffle(your_deck)
+        your_hand = your_deck[1:6] 
 
+        print("Running on {}".format(it), end="\r")
 
-    
+        # Hit a winning hand
+        if check_hand(your_hand) == 5:
+            print("We've assembled all five special cards... all five pieces of the puzzle!")
+            print("We have a match at {}".format(it))
+            winning_hands += 1
+
+except KeyboardInterrupt:  
+    print("Exiting the program!!!")
+
+# Report
+report = []
+
+for key, value in dd.items():
+    report.append([key, value])
+
+# Dataframe report
+df = pd.DataFrame(report, index=None, columns=['Card', 'Draws'])
+print(df.sort_values(by='Draws'))
+
+print("The number of winning hands is {}".format(winning_hands))
+
+# pprint(dd)
