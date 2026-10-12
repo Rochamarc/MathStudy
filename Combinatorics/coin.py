@@ -15,20 +15,34 @@ class Coin():
             return None
         
         self.__side = 'A'
-    
+
     @property
-    def value(self):
+    def value(self) -> any:
         """Return coin value based on the side"""
         
         if self.__side == 'A':
-            return self.__value_a
-        return self.__value_b
+            return str(self.__value_a)
+        return str(self.__value_b)
     
 
 if __name__ == "__main__":
-    coin = Coin(1, 2)
-    print(coin.value)
+    from random import randint
+
+    # coin = Coin(1, 2)
+    # print(coin)
+    # coin.flip()
+    # print(coin.value)
+    # coin.flip()
+    # print(coin.value)
+
+    # lançando 
+    coin = Coin('Heads', 'Tails')
+    print(coin)
     coin.flip()
-    print(coin.value)
-    coin.flip()
-    print(coin.value)
+    print(coin)
+
+
+    for _ in range(randint(2,1000)):
+        coin.flip()
+
+    print(coin)
