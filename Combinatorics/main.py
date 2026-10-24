@@ -1,6 +1,5 @@
 from random import choice
 import string
-from time import sleep
 
 options = string.ascii_uppercase + string.digits
 
@@ -12,19 +11,34 @@ class CustomHash:
         self.group = group
 
     @property
-    def hash(self):
+    def hash(self) -> str:
+        """A string containing the hash"""
         return self._hash
 
-    def __str__(self):
+    def __str__(self) -> str:
         if self.group:
             return ''.join([ '-' + self._hash[it] if ((it > 0) and (it % self.group == 0)) else self._hash[it] for it in range(len(self._hash)) ])
         return self._hash
     
 
-    def generate_hash(self, hash_length: int):
-        """
+    def generate_hash(self, hash_length: int) -> str:
+        """Generates a hash based on the hash_length argument
+
+        Parameters
+        ----------
+        hash_length : int
+            A value greater than 0
+        
+        Returns
+        -------
+        hash : str
+            A pseudo random hash
         """
 
+        if hash_length < 1:
+            raise(ValueError, "The hash_length has to be greater than zero.")
+        
+        # Define his options with uppercase letters and digits from 0 to 9
         options = string.ascii_uppercase + string.digits
         return ''.join([ choice(options) for _ in range(hash_length)])
 
