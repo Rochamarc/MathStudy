@@ -110,6 +110,31 @@ def populate_songs(songs: dict) -> list[list[Song]]:
 
     return exit_list
 
+def testing_lists(list_one: list, list_two: list) -> bool:
+    """
+    Compare the input list with the output list
+
+    Attributes
+    ----------
+    list_one : list
+        A two-dimensional input list.
+    list_two : list
+        An one-dimensional output list
+
+    Returns
+    -------
+    bool : true | false
+        True means that the two lists has the same size
+        False means that the two lists has diff sizes
+    """
+    input_sum = sum([
+        len(i) for i in list_one
+    ])
+
+    output_sum = len(list_two)
+    return input_sum == output_sum
+    
+
 if __name__ == "__main__":
 
     # Testing for case 1
@@ -125,6 +150,7 @@ if __name__ == "__main__":
     smart_shuffle = SmartShuffle(songs)
     pprint(smart_shuffle.playlist)
 
+    print(testing_lists(songs, smart_shuffle.playlist))
     # Testing for case 2
 
     # Change the number of songs per artist
@@ -138,6 +164,7 @@ if __name__ == "__main__":
     smart_shuffle = SmartShuffle(songs)
     pprint(smart_shuffle.playlist)
 
+    print(testing_lists(songs, smart_shuffle.playlist))
 
     # Testing for case 3
 
@@ -153,3 +180,5 @@ if __name__ == "__main__":
 
     smart_shuffle = SmartShuffle(songs)
     pprint(smart_shuffle.playlist)
+
+    print(testing_lists(songs, smart_shuffle.playlist))
