@@ -18,3 +18,4 @@ Some contain only raw code, without any direct context. Others include applied e
 * [Probability and Statistics](./Probability%20&%20Statistics/README.md)
 * [Algebra](./Pure%20Algebra/README.md)
 * [Set Theory](./Set%20Theory/README.md)
+* [Algorithms](./Algorithms/README.md)
