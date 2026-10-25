@@ -27,6 +27,7 @@ class SmartShuffle:
 
     def classify_artists(self, limit: int) -> None:
         """
+        Classifies artists into a specific list based on a predefined limit.
 
         Atributes
         ---------
