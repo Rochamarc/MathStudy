@@ -28,20 +28,25 @@ class SmartShuffle:
         """Runs a random shuffle on the songs and generate a playlist"""
 
         playlist = []
+        songs = self.songs.copy()
 
         # shuffle all the lists
         random.shuffle(self.songs)
         for artists in self.songs:
             random.shuffle(artists)
 
-        len_songs = len(self.songs[0])
-        len_artists = len(self.songs)
+        # get the artist with most songs
+        len_songs = max([len(artist) for artist in songs])
+        len_artists = len(songs)
 
         for it_song in range(len_songs):
             for it_ar in range(len_artists):
-                playlist.append(
-                    self.songs[it_ar][it_song]
-                )
+                try:
+                    playlist.append(
+                        songs[it_ar][it_song]
+                    )
+                except IndexError:
+                    continue
 
         return playlist
                 
@@ -74,6 +79,7 @@ def populate_songs(songs: dict) -> list[list[Song]]:
 
 if __name__ == "__main__":
 
+    # Testing for case 1
     songs_dict = {
         "Nirvana": ["In bloom", "Love Buzz", "About a girl", "Lounge act", "You know you're right"],
         "Pearl Jam": ["Porch", "Oceans", "Even flow", "Black", "Daughter"],
@@ -83,7 +89,25 @@ if __name__ == "__main__":
         
     songs = populate_songs(songs_dict)
 
-    print(songs)
+    # print(songs)
 
     smart_shuffle = SmartShuffle(songs)
     pprint(smart_shuffle.playlist)
+
+    # Testing for case 2
+
+    # Change the number of songs per artist
+    songs_dict["Nirvana"].append("Sappy")
+    songs_dict["Nirvana"].append("Territorial pissings")
+    songs_dict["Soundgarden"].pop()
+    songs_dict["Soundgarden"].pop()
+
+    songs = populate_songs(songs_dict)
+
+    smart_shuffle = SmartShuffle(songs)
+    pprint(smart_shuffle.playlist)
+
+
+
+
+
