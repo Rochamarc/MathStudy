@@ -20,12 +20,45 @@ class Song:
         return f"{self.title} from {self.artist}"
 
 class SmartShuffle:
-    def __init__(self, songs: list) -> None:
+    def __init__(self, songs: list, limit: int=3) -> None:
         self.songs = songs
+        self.limit = limit
         self.playlist = self.generate_playlist()
 
+    def classify_artists(self, limit: int) -> None:
+        """
+
+        Atributes
+        ---------
+        limit : int
+            An integer value that defines the minimum number of songs an artist must have. 
+            Artists with fewer songs than this threshold will be placed in a separate list.
+        
+        Returns
+        -------
+            None
+        """
+
+        ind_list = []
+        new_songs = []
+        songs = self.songs.copy()
+
+        for artist in songs:
+            if len(artist) < limit:
+                ind_list += artist
+            else:
+                new_songs.append(artist)
+
+        new_songs.append(ind_list)
+        self.songs = new_songs
+    
+        return None
+
+    
     def generate_playlist(self) -> list[Song]:
         """Runs a random shuffle on the songs and generate a playlist"""
+
+        self.classify_artists(self.limit) # classify for artists
 
         playlist = []
         songs = self.songs.copy()
@@ -89,8 +122,6 @@ if __name__ == "__main__":
         
     songs = populate_songs(songs_dict)
 
-    # print(songs)
-
     smart_shuffle = SmartShuffle(songs)
     pprint(smart_shuffle.playlist)
 
@@ -108,6 +139,17 @@ if __name__ == "__main__":
     pprint(smart_shuffle.playlist)
 
 
+    # Testing for case 3
 
+    songs_dict["Stone Temple Pilots"] = ["Plush", "Creep"]
+    songs_dict["Silverchair"] = ["Abuse me"]
+    songs_dict["Seether"] = ["Gasoline", "Fake it"]
+    songs_dict["Bush"] = ["Everything zen"]
 
+    # pprint(songs_dict)
 
+    songs = populate_songs(songs_dict)
+    # pprint(songs)
+
+    smart_shuffle = SmartShuffle(songs)
+    pprint(smart_shuffle.playlist)
